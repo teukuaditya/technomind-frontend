@@ -3,7 +3,6 @@ import { onBeforeUnmount, onBeforeMount } from "vue";
 import { useStore } from "vuex";
 
 import Navbar from "@/examples/PageLayout/Navbar.vue";
-import AppFooter from "@/examples/PageLayout/Footer.vue";
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonCheckbox from "@/components/ArgonCheckbox.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
@@ -172,10 +171,10 @@ onBeforeUnmount(() => {
             <div class="card-body">
               <form role="form">
                 <argon-input
-                  id="name"
+                  id="username"
                   type="text"
-                  placeholder="Name"
-                  aria-label="Name"
+                  placeholder="username"
+                  aria-label="Username"
                 />
                 <argon-input
                   id="email"
@@ -189,6 +188,13 @@ onBeforeUnmount(() => {
                   placeholder="Password"
                   aria-label="Password"
                 />
+                <div class="mb-3">
+                      <label for="role" class="form-label">Role</label>
+                      <select id="role" name="role" class="form-control form-control-lg">
+                        <option value="ph-operator">PH Operator</option>
+                        <option value="wh-operator">WH Operator</option>
+                      </select>
+                    </div>
                 <argon-checkbox checked>
                   <label class="form-check-label" for="flexCheckDefault">
                     I agree the
@@ -219,5 +225,4 @@ onBeforeUnmount(() => {
       </div>
     </div>
   </main>
-  <app-footer />
 </template>

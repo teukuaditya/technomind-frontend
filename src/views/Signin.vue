@@ -68,6 +68,14 @@ onBeforeUnmount(() => {
                         size="lg"
                       />
                     </div>
+                    <div class="mb-3">
+                      <label for="role" class="form-label">Role</label>
+                      <select id="role" name="role" class="form-control form-control-lg">
+                        <option value="ph-operator">PH Operator</option>
+                        <option value="wh-operator">WH Operator</option>
+                      </select>
+                    </div>
+
                     <argon-switch id="rememberMe" name="remember-me"
                       >Remember me</argon-switch
                     >
@@ -110,11 +118,10 @@ onBeforeUnmount(() => {
                 <h4
                   class="mt-5 text-white font-weight-bolder position-relative"
                 >
-                  "Attention is the new currency"
+                  "TechnoMinds"
                 </h4>
                 <p class="text-white position-relative">
-                  The more effortless the writing looks, the more effort the
-                  writer actually put into the process.
+                  Solusi pasti teknologi masa kini
                 </p>
               </div>
             </div>
