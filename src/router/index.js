@@ -15,7 +15,7 @@ const getUserRole = () => {
 const routes = [
   {
     path: "/",
-    redirect: "/dashboard-default",
+    redirect: "/signin",
   },
   {
     path: "/dashboard-default",

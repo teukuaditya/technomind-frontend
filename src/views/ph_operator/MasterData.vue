@@ -2,7 +2,7 @@
     <div class="item-list">
         <div class="card">
             <div class="header d-flex justify-content-between align-items-center">
-                <h2>Daftar Master Data Barang</h2>
+                <h2> Master Data </h2>
             </div>
             <table class="table table-bordered mt-3">
                 <thead class="table-light">

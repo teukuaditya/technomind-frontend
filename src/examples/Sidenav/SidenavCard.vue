@@ -35,7 +35,7 @@ defineProps({
 
       <h6 v-if="isRTL" class="mb-0 text-dark up">تحتاج مساعدة ؟</h6>
 
-      <h6 v-else class="mb-0 text-dark up">TechnoMinds</h6>
+      <h6 v-else class="mb-0 text-dark up">PT.TechnoMinds</h6>
 
       <p v-if="isRTL" class="text-xs font-weight-bold">
         يرجى التحقق من مستنداتنا

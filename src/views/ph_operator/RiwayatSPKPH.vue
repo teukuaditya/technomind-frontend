@@ -1,12 +1,12 @@
 <template>
   <div class="history-list">
     <h2>Riwayat Pengajuan SPK</h2>
-    <button @click="print" class="btn btn-primary">
-        <i class="bi bi-printer"></i> Cetak Laporan
+    <button @click="print" class="btn btn-primary mb-4">
+      <i class="bi bi-printer"></i> Cetak Laporan
     </button>
-    <div class="table-responsive">
-      <table>
-        <thead>
+    <div class="table-responsive" id="print-section">
+      <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
           <tr>
             <th>ID</th>
             <th>Nama Karyawan</th>
@@ -21,7 +21,7 @@
             <td>{{ history.namaKaryawan }}</td>
             <td>{{ history.tanggalPengajuan }}</td>
             <td>
-              <a :href="history.spkLink" target="_blank">Unduh SPK</a>
+              <a :href="history.spkLink" target="_blank" class="btn btn-link">Unduh SPK</a>
             </td>
             <td :class="['status', history.status.toLowerCase()]">
               {{ history.status }}
@@ -43,46 +43,37 @@ export default {
           id: 1,
           namaKaryawan: "Doni Monardo",
           tanggalPengajuan: "2024-01-01",
-          spkLink: "/path/to/spk1.pdf",
+          spkLink: "https://drive.google.com/file/d/1eE_L0n1G8gc66qSkm6UtCsBocnFc78_j/view?usp=sharing",
           status: "done",
         },
         {
           id: 2,
           namaKaryawan: "Doni Monardo",
           tanggalPengajuan: "2024-01-02",
-          spkLink: "/path/to/spk2.pdf",
+          spkLink: "https://drive.google.com/file/d/1eE_L0n1G8gc66qSkm6UtCsBocnFc78_j/view?usp=sharing",
           status: "done",
         },
         {
           id: 3,
           namaKaryawan: "Doni Monardo",
           tanggalPengajuan: "2024-01-03",
-          spkLink: "/path/to/spk3.pdf",
+          spkLink: "https://drive.google.com/file/d/1eE_L0n1G8gc66qSkm6UtCsBocnFc78_j/view?usp=sharing",
           status: "done",
         },
         {
           id: 4,
           namaKaryawan: "Doni Monardo",
           tanggalPengajuan: "2024-01-04",
-          spkLink: "/path/to/spk4.pdf",
-          status: "done",
-        },
-        {
-          id: 5,
-          namaKaryawan: "Doni Monardo",
-          tanggalPengajuan: "2024-01-05",
-          spkLink: "/path/to/spk5.pdf",
-          status: "done",
-        },
-        {
-          id: 6,
-          namaKaryawan: "Doni Monardo",
-          tanggalPengajuan: "2024-01-06",
-          spkLink: "/path/to/spk6.pdf",
+          spkLink: "https://drive.google.com/file/d/1eE_L0n1G8gc66qSkm6UtCsBocnFc78_j/view?usp=sharing",
           status: "done",
         },
       ],
     };
+  },
+  methods: {
+    print() {
+      window.print();
+    },
   },
 };
 </script>
@@ -96,6 +87,7 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: 8px 0;
 }
+
 h2 {
   margin-bottom: 20px;
   color: #080808;
@@ -103,34 +95,40 @@ h2 {
   font-size: 24px;
   font-weight: bold;
 }
-table {
+
+/* Tabel Styling */
+.table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
 }
-th,
-td {
-  border: 1px solid #ddd;
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+.table th,
+.table td {
   padding: 12px 15px;
   text-align: left;
 }
-th {
-  background-color: #b6b6b6;
-  color: rgb(73, 72, 72);
+
+.table th {
+  background-color: #343a40;
+  color: white;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
 }
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6;
 }
-tr:nth-child(even) {
-  background-color: #f2f2f2;
+
+.table a.btn-link {
+  text-decoration: none;
+  color: #007bff;
 }
-tr:hover {
-  background-color: #ddd;
-}
-.status {
+
+.table .status {
   text-transform: capitalize;
   font-weight: bold;
   color: #fff;
@@ -138,7 +136,32 @@ tr:hover {
   border-radius: 4px;
   text-align: center;
 }
-.status.done {
-  background-color: #5cb85c;
+
+.table .status.done {
+  background-color: #28a745;
+}
+
+.table .status.pending {
+  background-color: #ffc107;
+}
+
+.table .status.rejected {
+  background-color: #dc3545;
+}
+
+/* CSS untuk tampilan print */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #print-section,
+  #print-section * {
+    visibility: visible;
+  }
+  #print-section {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 }
 </style>

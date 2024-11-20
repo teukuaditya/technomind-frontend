@@ -22,27 +22,14 @@ export default createStore({
     toggleConfigurator(state) {
       state.showConfig = !state.showConfig;
     },
-    sidebarMinimize(state) {
-      let sidenav_show = document.querySelector("#app");
-      if (state.isPinned) {
-        sidenav_show.classList.add("g-sidenav-hidden");
-        sidenav_show.classList.remove("g-sidenav-pinned");
-        state.isPinned = false;
-      } else {
-        sidenav_show.classList.add("g-sidenav-pinned");
-        sidenav_show.classList.remove("g-sidenav-hidden");
-        state.isPinned = true;
-      }
+    toggleSidebarPinned(state) {
+      state.isPinned = !state.isPinned;
     },
     sidebarType(state, payload) {
       state.sidebarType = payload;
     },
-    navbarFixed(state) {
-      if (state.isNavFixed === false) {
-        state.isNavFixed = true;
-      } else {
-        state.isNavFixed = false;
-      }
+    toggleNavbarFixed(state) {
+      state.isNavFixed = !state.isNavFixed;
     },
   },
   actions: {
@@ -50,5 +37,12 @@ export default createStore({
       commit("sidebarType", payload);
     },
   },
-  getters: {},
+  getters: {
+    isSidebarPinned(state) {
+      return state.isPinned;
+    },
+    isNavbarFixed(state) {
+      return state.isNavFixed;
+    }
+  },
 });

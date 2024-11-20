@@ -46,7 +46,8 @@ onBeforeUnmount(() => {
           <div class="col-lg-5 text-center mx-auto">
             <h1 class="text-white mb-2 mt-5">Welcome!</h1>
             <p class="text-lead text-white">
-              Solusi Terbaik untuk Kebutuhan Textile Anda: Kualitas Terjamin, Harga Bersaing, dan Layanan Terbaik untuk Kepuasan Pelanggan.
+              Use these awesome forms to login or create new account in your
+              project for free.
             </p>
           </div>
         </div>
@@ -61,7 +62,7 @@ onBeforeUnmount(() => {
             </div>
             <div class="row px-xl-5 px-sm-4 px-3">
               <div class="col-3 ms-auto px-1">
-                <a class="btn btn-outline-light w-100" href="#">
+                <a class="btn btn-outline-light w-100" href="javascript:;">
                   <svg
                     width="24px"
                     height="32px"
@@ -94,7 +95,7 @@ onBeforeUnmount(() => {
                 </a>
               </div>
               <div class="col-3 px-1">
-                <a class="btn btn-outline-light w-100" href="/#">
+                <a class="btn btn-outline-light w-100" href="javascript:;">
                   <svg
                     width="24px"
                     height="32px"
@@ -121,7 +122,7 @@ onBeforeUnmount(() => {
                 </a>
               </div>
               <div class="col-3 me-auto px-1">
-                <a class="btn btn-outline-light w-100" href="/#">
+                <a class="btn btn-outline-light w-100" href="javascript:;">
                   <svg
                     width="24px"
                     height="32px"
@@ -213,7 +214,7 @@ onBeforeUnmount(() => {
                 </div>
                 <p class="text-sm mt-3 mb-0">
                   Already have an account?
-                  <a href="/Signin" class="text-dark font-weight-bolder"
+                  <a href="javascript:;" class="text-dark font-weight-bolder"
                     >Sign in</a
                   >
                 </p>

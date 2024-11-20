@@ -1,49 +1,51 @@
 <template>
   <div class="container mt-5">
-    <h2 class="text-center">Pengajuan SPK</h2>
-    <form @submit.prevent="submitSPK">
-      <div class="mb-3">
-        <label for="employeeName" class="form-label">Nama Karyawan</label>
-        <input
-          type="text"
-          class="form-control"
-          id="employeeName"
-          v-model="employeeName"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <label for="spkFile" class="form-label">Upload File SPK</label>
-        <input
-          type="file"
-          class="form-control"
-          id="spkFile"
-          @change="handleFileUpload"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <label for="submissionDate" class="form-label">Tanggal</label>
-        <input
-          type="date"
-          class="form-control"
-          id="submissionDate"
-          v-model="submissionDate"
-          required
-        />
-      </div>
+    <div class="card p-4 shadow-sm">
+      <h2 class="text-center">Pengajuan SPK</h2>
+      <form @submit.prevent="submitSPK">
+        <div class="mb-3">
+          <label for="employeeName" class="form-label">Nama Karyawan</label>
+          <input
+            type="text"
+            class="form-control"
+            id="employeeName"
+            v-model="employeeName"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="spkFile" class="form-label">Upload SPK</label>
+          <input
+            type="file"
+            class="form-control"
+            id="spkFile"
+            @change="handleFileUpload"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="submissionDate" class="form-label">Tanggal</label>
+          <input
+            type="date"
+            class="form-control"
+            id="submissionDate"
+            v-model="submissionDate"
+            required
+          />
+        </div>
 
-      <div class="mb-3">
-        <label for="operator" class="form-label">Penerima</label>
-        <select class="form-select" v-model="selectedOperator" required>
-          <option v-for="operator in operators" :key="operator.name" :value="operator.name">
-            {{ operator.name }} || {{ operator.status }}
-          </option>
-        </select>
-      </div>
+        <div class="mb-3">
+          <label for="operator" class="form-label">Penerima</label>
+          <select class="form-select" v-model="selectedOperator" required>
+            <option v-for="operator in operators" :key="operator.name" :value="operator.name">
+              {{ operator.name }} || {{ operator.status }}
+            </option>
+          </select>
+        </div>
 
-      <button type="submit" class="btn btn-primary">Kirim</button>
-    </form>
+        <button type="submit" class="btn btn-primary">Kirim</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -96,6 +98,12 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 600px;
+  max-width: 100%;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
 }
 </style>

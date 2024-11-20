@@ -12,7 +12,8 @@
               <th>Nama Karyawan</th>
               <th>SPK</th>
               <th>Tanggal Pengajuan</th>
-              <th>WH Operator</th> 
+              <th>WH Operator</th>
+              <th>Status</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -24,10 +25,14 @@
                 <a :href="item.spk" target="_blank">Download PDF</a>
               </td>
               <td>{{ item.tanggalPengajuan }}</td>
-              <td>Doni Monardo</td> 
+              <td>Doni Monardo</td>
+              <td>{{ item.status }}</td>
               <td>
-                <button class="btn btn-primary btn-sm" @click="editSPK(item.id)">
-                  <i class="bi bi-pencil-square">Terima</i>
+                <button
+                  class="btn btn-primary btn-sm"
+                  @click="openForm(item)"
+                >
+                  <i class="bi bi-pencil-square"></i> Terima
                 </button>
               </td>
             </tr>
@@ -35,80 +40,72 @@
         </table>
       </div>
     </div>
-    <Modal :visible="showForm" @close="cancelEditForm">
-      <TransactionForm
-        :item="selectedItem"
-        :isEdit="isEdit"
-        @submit="handleSubmit"
-        @cancel="cancelEditForm"
-      />
-    </Modal>
+
+    <!-- Modal -->
+    <FormSpk
+      v-if="showForm"
+      :visible="showForm"
+      :item="selectedItem"
+      @close="closeForm"
+      @updateStatus="updateStatus"
+    />
   </div>
 </template>
 
 <script>
-//import TransactionForm from '../components/admin/transaction/TransactionForm.vue'
-//import Modal from '@/components/Modal.vue';
+import FormSpk from "@/views/wh_operator/FormSpk.vue";
+
 export default {
   components: {
-    //TransactionForm,
-    //Modal
+    FormSpk,
   },
   data() {
     return {
+      showForm: false, // Kontrol visibilitas modal
+      selectedItem: null, // Item yang dipilih
       tableData: [
         {
           id: 1,
-          namaKaryawan: 'John Doe',
-          spk: 'path/to/surat_perintah_kerja_1.pdf',
-          tanggalPengajuan: '2024-11-01',
-          status: 'Pending'
+          namaKaryawan: "John Doe",
+          spk: "https://drive.google.com/file/d/1eE_L0n1G8gc66qSkm6UtCsBocnFc78_j/view?usp=sharing",
+          tanggalPengajuan: "2024-11-01",
+          status: "On Process",
         },
         {
           id: 2,
-          namaKaryawan: 'Jane Smith',
-          spk: 'path/to/surat_perintah_kerja_2.pdf',
-          tanggalPengajuan: '2024-11-02',
-          status: 'On Process'
+          namaKaryawan: "Jane Smith",
+          spk: "https://drive.google.com/file/d/1eE_L0n1G8gc66qSkm6UtCsBocnFc78_j/view?usp=sharing",
+          tanggalPengajuan: "2024-11-02",
+          status: "On Process",
         },
         {
           id: 3,
-          namaKaryawan: 'Michael Johnson',
-          spk: 'path/to/surat_perintah_kerja_3.pdf',
-          tanggalPengajuan: '2024-11-03',
-          status: 'Done'
+          namaKaryawan: "Michael Johnson",
+          spk: "https://drive.google.com/file/d/1eE_L0n1G8gc66qSkm6UtCsBocnFc78_j/view?usp=sharing",
+          tanggalPengajuan: "2024-11-03",
+          status: "On Process",
         },
-        {
-          id: 4,
-          namaKaryawan: 'Jane Smith',
-          spk: 'path/to/surat_perintah_kerja_2.pdf',
-          tanggalPengajuan: '2024-11-02',
-          status: 'On Process'
-        },
-        {
-          id: 5,
-          namaKaryawan: 'Michael Johnson',
-          spk: 'path/to/surat_perintah_kerja_3.pdf',
-          tanggalPengajuan: '2024-11-03',
-          status: 'Done'
-        },
-        {
-          id: 6,
-          namaKaryawan: 'John Doe',
-          spk: 'path/to/surat_perintah_kerja_1.pdf',
-          tanggalPengajuan: '2024-11-01',
-          status: 'Pending'
-        },
-      ]
+      ],
     };
   },
   methods: {
-    editSPK(id) {
-      // Logika untuk mengedit SPK, misalnya membuka modal atau halaman edit
-      console.log(`Edit SPK dengan ID ${id}`);
-      alert(`Fungsi edit untuk SPK dengan ID ${id} belum diimplementasikan.`); // Notifikasi sementara
-    }
-  }
+    openForm(item) {
+      this.selectedItem = { ...item }; // Salin data item ke modal
+      this.showForm = true; // Tampilkan modal
+    },
+    closeForm() {
+      this.showForm = false; // Sembunyikan modal
+      this.selectedItem = null; // Reset data
+    },
+    updateStatus(updatedItem) {
+      // Perbarui status item di tableData
+      const index = this.tableData.findIndex((item) => item.id === updatedItem.id);
+      if (index !== -1) {
+        this.tableData[index].status = updatedItem.status;
+      }
+      this.closeForm(); // Tutup modal
+    },
+  },
 };
 </script>
 
@@ -116,7 +113,6 @@ export default {
 .item-list {
   width: 100%;
 }
-/* Tabel styling */
 .table {
   width: 100%;
   margin-top: 20px;

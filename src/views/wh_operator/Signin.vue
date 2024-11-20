@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
               <div class="card card-plain">
                 <div class="pb-0 card-header text-start">
                   <h4 class="font-weight-bolder">Sign In</h4>
-                  <p class="mb-0">Enter your emai, password and role to sign in</p>
+                  <p class="mb-0">Enter your email and password to sign in</p>
                 </div>
                 <div class="card-body">
                   <form role="form">
@@ -96,7 +96,7 @@ onBeforeUnmount(() => {
                   <p class="mx-auto mb-4 text-sm">
                     Don't have an account?
                     <a
-                      href="/Signup"
+                      href="javascript:;"
                       class="text-success text-gradient font-weight-bold"
                       >Sign up</a
                     >
@@ -121,7 +121,7 @@ onBeforeUnmount(() => {
                   "TechnoMinds"
                 </h4>
                 <p class="text-white position-relative">
-                  Menghadirkan Tekstil Terbaik untuk Kreasi Anda
+                  Solusi pasti teknologi masa kini
                 </p>
               </div>
             </div>
