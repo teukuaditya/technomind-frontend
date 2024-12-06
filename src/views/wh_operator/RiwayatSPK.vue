@@ -10,7 +10,7 @@
         </button>
       </div>
       <div class="card-body" id="print-section">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered">
           <thead>
             <tr>
               <th>No</th>
@@ -25,7 +25,17 @@
               <td>{{ index + 1 }}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.tanggal }}</td>
-              <td>{{ item.status }}</td>
+              <td>
+                <span
+                  class="badge"
+                  :class="{
+                    'badge-success': item.status === 'done',
+                    'badge-warning': item.status === 'pending',
+                  }"
+                >
+                  {{ item.status }}
+                </span>
+              </td>
               <td>
                 <a :href="item.pdfLink" target="_blank">Unduh PDF</a>
               </td>
@@ -34,14 +44,6 @@
         </table>
       </div>
     </div>
-    <Modal :visible="showForm" @close="cancelEditForm">
-      <ItemForm
-        :item="selectedItem"
-        :isEdit="isEdit"
-        @submit="handleSubmit"
-        @cancel="cancelEditForm"
-      />
-    </Modal>
   </div>
 </template>
 
@@ -50,107 +52,23 @@ export default {
   data() {
     return {
       riwayat: [
-        {
-          id: 1,
-          name: "Budi ",
-          tanggal: "2024-01-01",
-          status: "done",
-          pdfLink: "/path/to/pdf1.pdf",
-        },
-        {
-          id: 2,
-          name: "Andi",
-          tanggal: "2024-01-02",
-          status: "done",
-          pdfLink: "/path/to/pdf2.pdf",
-        },
-        {
-          id: 3,
-          name: "Dodi",
-          tanggal: "2024-01-03",
-          status: "done",
-          pdfLink: "/path/to/pdf3.pdf",
-        },
-        {
-          id: 4,
-          name: "Krisna",
-          tanggal: "2024-01-04",
-          status: "done",
-          pdfLink: "/path/to/pdf4.pdf",
-        },
-        {
-          id: 5,
-          name: "Asep",
-          tanggal: "2024-01-05",
-          status: "done",
-          pdfLink: "/path/to/pdf5.pdf",
-        },
-        {
-          id: 6,
-          name: "Wulan ",
-          tanggal: "2024-01-06",
-          status: "done",
-          pdfLink: "/path/to/pdf6.pdf",
-        },
-        {
-          id: 7,
-          name: "Aisyah",
-          tanggal: "2024-01-07",
-          status: "done",
-          pdfLink: "/path/to/pdf7.pdf",
-        },
+        { id: 1, name: "Budi", tanggal: "2024-01-01", status: "done", pdfLink: "/path/to/pdf1.pdf" },
+        { id: 2, name: "Andi", tanggal: "2024-01-02", status: "done", pdfLink: "/path/to/pdf2.pdf" },
+        { id: 3, name: "Dodi", tanggal: "2024-01-03", status: "done", pdfLink: "/path/to/pdf3.pdf" },
+        { id: 4, name: "Krisna", tanggal: "2024-01-04", status: "done", pdfLink: "/path/to/pdf4.pdf" },
+        { id: 5, name: "Asep", tanggal: "2024-01-05", status: "done", pdfLink: "/path/to/pdf5.pdf" },
+        { id: 6, name: "Wulan", tanggal: "2024-01-06", status: "done", pdfLink: "/path/to/pdf6.pdf" },
+        { id: 7, name: "Aisyah", tanggal: "2024-01-07", status: "done", pdfLink: "/path/to/pdf7.pdf" },
       ],
-      showForm: false,
-      selectedItem: null,
-      isEdit: false,
     };
   },
   methods: {
     print() {
       window.print();
     },
-    showAddForm() {
-      this.selectedItem = {
-        id: "",
-        name: "",
-        tanggal: "",
-        status: "done",
-        pdfLink: "",
-      };
-      this.isEdit = false;
-      this.showForm = true;
-    },
-    editItem(item) {
-      this.selectedItem = { ...item };
-      this.isEdit = true;
-      this.showForm = true;
-    },
-    handleSubmit(item) {
-      if (this.isEdit) {
-        const index = this.riwayat.findIndex((i) => i.id === item.id);
-        if (index !== -1) {
-          this.riwayat.splice(index, 1, item);
-        }
-      } else {
-        item.id = Date.now(); // Assign unique ID for new items
-        this.riwayat.push(item);
-      }
-      this.showForm = false;
-      this.selectedItem = null;
-      this.isEdit = false;
-    },
-    cancelEditForm() {
-      this.showForm = false;
-      this.isEdit = false;
-      this.selectedItem = null;
-    },
-    deleteItem(id) {
-      this.riwayat = this.riwayat.filter((item) => item.id !== id);
-    },
   },
 };
 </script>
-
 
 <style scoped>
 .item-list {
@@ -160,7 +78,64 @@ export default {
 /* Tabel styling */
 .table {
   width: 100%;
+  border-collapse: collapse;
   margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+  background-color: #f8f9fa;
+  color: #212529;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  border: 1px solid #dee2e6;
+}
+
+.table td {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #dee2e6;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.table tbody tr:hover {
+  background-color: #e9ecef;
+  cursor: pointer;
+}
+
+.table a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.table a:hover {
+  text-decoration: underline;
+}
+
+/* Badge styling */
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+}
+
+.badge-success {
+  background-color: #28a745;
+}
+
+.badge-warning {
+  background-color: #ffc107;
 }
 
 /* Style untuk tampilan print */
@@ -179,4 +154,3 @@ export default {
   }
 }
 </style>
-

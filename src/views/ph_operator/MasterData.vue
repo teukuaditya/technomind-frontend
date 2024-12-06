@@ -1,27 +1,66 @@
 <template>
-    <div class="item-list">
-        <div class="card">
-            <div class="header d-flex justify-content-between align-items-center">
-                <h2> Master Data </h2>
+    <div class="item-list-container">
+        <div class="card modern-card">
+            <div class="card-header">
+                <h2 class="card-title">Master Data Inventory</h2>
+                <button @click="showAddForm" class="btn btn-primary add-item-btn">
+                    <i class="bi bi-plus-circle me-2"></i>Tambah Item
+                </button>
             </div>
-            <table class="table table-bordered mt-3">
-                <thead class="table-light">
-                    <tr>
-                        <th>Nama</th>
-                        <th>Deskripsi</th>
-                        <th>Stok</th>
-                        <th>Harga</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in items" :key="item.id">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.deskripsi }}</td>
-                        <td>{{ item.stok }}</td>
-                        <td>{{ item.price }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table modern-table">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Deskripsi</th>
+                            <th>Stok</th>
+                            <th>Harga</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in items" :key="item.id">
+                            <td>
+                                <div class="item-name">{{ item.name }}</div>
+                            </td>
+                            <td>
+                                <div class="item-description text-muted">{{ item.deskripsi }}</div>
+                            </td>
+                            <td>
+                                <span 
+                                    class="badge" 
+                                    :class="{
+                                        'bg-success': item.stok > 200,
+                                        'bg-warning': item.stok <= 200 && item.stok > 50,
+                                        'bg-danger': item.stok <= 50
+                                    }"
+                                >
+                                    {{ item.stok }}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="item-price text-primary fw-bold">{{ item.price }}</div>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <button 
+                                        @click="editItem(item)" 
+                                        class="btn btn-outline-warning btn-sm me-2"
+                                    >
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button 
+                                        @click="deleteItem(item.id)" 
+                                        class="btn btn-outline-danger btn-sm"
+                                    >
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <Modal :visible="showForm" @close="cancelEditForm">
             <ItemForm
@@ -35,12 +74,7 @@
 </template>
 
 <script>
-//import Modal from '@/components/Modal.vue';
-
 export default {
-    components: {
-        //Modal
-    },
     data() {
         return {
             items: [
@@ -89,42 +123,115 @@ export default {
             this.selectedItem = null;
         },
         deleteItem(id) {
-            this.items = this.items.filter(item => item.id !== id);
+            // Add confirmation dialog
+            if (confirm('Apakah Anda yakin ingin menghapus item ini?')) {
+                this.items = this.items.filter(item => item.id !== id);
+            }
         }
     }
 };
 </script>
 
 <style scoped>
-/* Card styling */
-.card {
-    width: 100%;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.item-list-container {
+    background-color: #f4f7fa;
     padding: 20px;
 }
 
-.header {
-    margin-bottom: 20px;
+.modern-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    overflow: hidden;
 }
 
-/* Button styling for table actions */
-.btn {
-    margin-right: 5px;
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
 }
 
-/* Tabel styling adjustments */
-.table {
-    width: 100%;
-    margin-top: 20px;
+.card-title {
+    margin-bottom: 0;
+    font-weight: 600;
+    color: #333;
 }
 
-.table th, .table td {
-    text-align: left;
+.add-item-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.table-light th {
-    background-color: #f2f2f2;
+.modern-table {
+    margin-bottom: 0;
+}
+
+.modern-table thead {
+    background-color: #f1f3f5;
+}
+
+.modern-table thead th {
+    color: #495057;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.modern-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.modern-table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+.item-name {
+    font-weight: 600;
+    color: #212529;
+    padding: 5px;
+}
+
+.item-description {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.item-price {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.badge {
+    padding: 0.4em 0.6em;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.btn-group .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    padding: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .add-item-btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 </style>
